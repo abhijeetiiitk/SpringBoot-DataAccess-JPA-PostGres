@@ -1,0 +1,64 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+group = 'com.tgt.search.services'
+version = '0.0.1'
+
+description = """BlackListGenerator microservice"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+// In this section you declare where to find the dependencies of your project
+repositories {        
+     maven { url "http://repo1.maven.org/maven2" }
+     maven { url "https://binrepo.target.com/artifactory/apps-release-local" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile("org.hamcrest:hamcrest-all:1.3")
+	compile("postgresql:postgresql:9.0-801.jdbc4")
+	compile("org.hibernate:hibernate-core:5.2.2.Final")
+	compile("org.springframework.boot:spring-boot-starter-web:1.4.1.RELEASE")
+	compile("org.springframework.boot:spring-boot-starter-data-jpa:1.4.1.RELEASE")
+}
+
+jar {
+    manifest {
+        attributes(
+            "Manifest-Version" : "1.0",
+            "Created-By" : "Gradle",
+            "Implementation-Title" : "BlackListGenerator",
+            "Implementation-Version" : version,
+            "Main-Class" : "com.tgt.search.microservices.blackList.app.main.BlackListGeneratorApp",
+            "Class-Path" : "."
+        )
+    }
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',  
+                   'Implementation-Version': version,
+                   'Main-Class': 'com.tgt.search.microservices.blackList.app.main.BlackListGeneratorApp'
+    }
+    baseName = project.name
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+uploadArchives { 
+    repositories.mavenDeployer {
+        repository(url: "https://binrepo.target.com/artifactory/apps-release-local") {
+            authentication(userName: System.env.BINREPO_ARTIFACTORY_USER, password: System.env.BINREPO_ARTIFACTORY_PWD)
+        }
+        pom.groupId = 'com.tgt.search.services'
+        pom.version = version
+        pom.artifactId = 'blackListGenerator-microservice'
+    }
+}
+
