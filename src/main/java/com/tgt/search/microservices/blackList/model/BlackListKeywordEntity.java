@@ -1,24 +1,28 @@
 package com.tgt.search.microservices.blackList.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class BlackListKeywordEntity {
   
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @Column(name = "SERIAL_ID")
-  private Long id;
+  @SequenceGenerator(name="seq-gen",sequenceName="BLACKLIST_ID_SEQ", initialValue=1111, allocationSize = 1)
+  @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen")
+  @Column(name = "SERIALID")
+  private Long serialId;
 
-  @Column(name = "BLACKLIST_QUERY")
+  @Column(name = "BLACKLISTKEYWORD")
   private String blackListKeyword;
   
-  @Column(name = "TIME_UPDATED")
-  private int updatedTime;
+  @Column(name = "UPDATEDTIME")
+  private Date updatedTime;
 
   public BlackListKeywordEntity(String blackListKeyword) {
     super();

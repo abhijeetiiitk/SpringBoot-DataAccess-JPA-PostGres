@@ -16,10 +16,12 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.tgt.search.microservices.blackList.constant.QueryConstant;
+
 @SpringBootApplication
-@ComponentScan(basePackages = "com.tgt.search.microservices.blackList.*")
+@ComponentScan(basePackages = QueryConstant.BASE_PACKAGE)
 @EnableTransactionManagement
-@EnableJpaRepositories("com.tgt.search.microservices.blackList.processor")
+@EnableJpaRepositories(QueryConstant.JPA_BASE_PACKAGE)
 public class BlackListGeneratorApp {
 
 	public static void main(String[] args) {

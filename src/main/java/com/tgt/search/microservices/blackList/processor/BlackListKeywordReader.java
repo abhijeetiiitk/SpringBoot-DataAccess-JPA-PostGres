@@ -11,21 +11,21 @@ import com.tgt.search.microservices.blackList.model.BlackListKeywordEntity;
 @Component
 public class BlackListKeywordReader {
 
-  @Autowired
-  OptOutKeywordWriter optOutKeywordWriter;
+	@Autowired
+	OptOutKeywordWriter optOutKeywordWriter;
 
-  @Autowired
-  BlackListKeywordWriter blackListKeywordWriter;
+	@Autowired
+	BlackListKeywordWriter blackListKeywordWriter;
 
-  //@Scheduled(fixedRate = 3000)
-  public void writeBlackListKeywords() {
-    blackListKeywordWriter.addToBlackListKeywordList(optOutKeywordWriter.getAllBlackListKeyword().stream()
-        .map(keywordEntity -> new BlackListKeywordEntity(keywordEntity)).collect(Collectors.toList()));
-  }
+	// @Scheduled(fixedRate = 3000)
+	public void writeBlackListKeywords() {
+		blackListKeywordWriter.addToBlackListKeywordList(optOutKeywordWriter.getAllBlackListKeyword().stream()
+				.map(keywordEntity -> new BlackListKeywordEntity(keywordEntity)).collect(Collectors.toList()));
+	}
 
-  public List<String> readBlackListKeyword() {
-    return blackListKeywordWriter.getAllBlackListkeywords().stream()
-        .map(keywordEntity -> keywordEntity.getBlackListKeyword()).collect(Collectors.toList());
-  }
+	public List<String> readBlackListKeyword() {
+		return blackListKeywordWriter.getAllBlackListkeywords().stream()
+				.map(keywordEntity -> keywordEntity.getBlackListKeyword()).collect(Collectors.toList());
+	}
 
 }

@@ -29,7 +29,7 @@ public class BlackListController {
 		OptOutKeywordEntity keywordEntity = optOutKeywordWriter.getOptOutKeyword(optOutKeyword);
 		if (keywordEntity != null) {
 			int frequency = keywordEntity.getKeywordFrequency() + BASE_OCCURRANCE;
-			optOutKeywordWriter.addToOptKeywordList(optOutKeyword, frequency);
+			optOutKeywordWriter.updateKeywordFrequency(frequency, optOutKeyword);
 		} else {
 			optOutKeywordWriter.addToOptKeywordList(optOutKeyword, BASE_OCCURRANCE);
 		}
