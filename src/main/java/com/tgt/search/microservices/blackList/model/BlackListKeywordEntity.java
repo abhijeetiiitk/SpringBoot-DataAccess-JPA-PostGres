@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class BlackListKeywordEntity {
@@ -21,7 +23,8 @@ public class BlackListKeywordEntity {
   @Column(name = "BLACKLISTKEYWORD")
   private String blackListKeyword;
   
-  @Column(name = "UPDATEDTIME")
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "UPDATEDTIME", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false)
   private Date updatedTime;
 
   public BlackListKeywordEntity(String blackListKeyword) {
