@@ -17,7 +17,7 @@ public interface OptOutRepository extends CrudRepository<OptOutKeywordEntity, Lo
 
 	static final String READ_BLACKLIST_ELIGIBLE_KEYWORDS_QUERY = "SELECT optOutKeyword FROM OptOutKeywordEntity WHERE keywordFrequency*100/:thresholdValue > :blackListEligiblePercentage AND optOutKeyword NOT IN (SELECT blackListKeyword FROM BlackListKeywordEntity)";
 	final static String IS_KEYWORD_EXIST = "SELECT COUNT(OptOutKeywordEntity) FROM OptOutKeywordEntity WHERE optOutKeyword = :optOutKeyword)";
-	final static String UPDATE_KEYWORD_FREQUENCY = "UPDATE OptOutKeywordEntity SET keywordFrequency = :keywordFrequency WHERE optOutKeyword = :optOutKeyword)";
+	final static String UPDATE_KEYWORD_FREQUENCY = "UPDATE OptOutKeywordEntity SET keywordFrequency = :keywordFrequency,updatedTime= now() WHERE optOutKeyword = :optOutKeyword)";
 
 	@Query(READ_BLACKLIST_ELIGIBLE_KEYWORDS_QUERY)
 	public List<String> findBlackListElegibleKeyword(@Param("thresholdValue") int thresholdValue,

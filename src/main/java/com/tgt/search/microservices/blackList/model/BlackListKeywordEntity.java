@@ -24,7 +24,8 @@ public class BlackListKeywordEntity {
   private String blackListKeyword;
   
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "UPDATEDTIME", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false)
+  @Column(name = "UPDATEDTIME", insertable = false, updatable = true,
+	        columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
   private Date updatedTime;
 
   public BlackListKeywordEntity(String blackListKeyword) {

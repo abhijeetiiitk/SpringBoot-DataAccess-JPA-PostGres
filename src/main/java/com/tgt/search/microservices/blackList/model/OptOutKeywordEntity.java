@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,8 +17,8 @@ import javax.persistence.TemporalType;
 public class OptOutKeywordEntity {
 
 	@Id
-	@SequenceGenerator(name="seq-gen",sequenceName="OPTOUT_ID_SEQ", initialValue=1111, allocationSize = 1)
-	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen")
+	@SequenceGenerator(name = "seq-gen", sequenceName = "OPTOUT_ID_SEQ", initialValue = 1111, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq-gen")
 	@Column(name = "SERIALID")
 	private Long serialId;
 
@@ -25,9 +27,9 @@ public class OptOutKeywordEntity {
 
 	@Column(name = "KEYWORDFREQUENCY")
 	private int keywordFrequency;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "UPDATEDTIME", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false)
+	@Column(name = "UPDATEDTIME", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private Date updatedTime;
 
 	public OptOutKeywordEntity(String blackListKeyword, int keywordFrequency) {
@@ -35,10 +37,20 @@ public class OptOutKeywordEntity {
 		this.optOutKeyword = blackListKeyword;
 		this.keywordFrequency = keywordFrequency;
 	}
-	
-	 public int getKeywordFrequency() {
-	    return keywordFrequency;
-	  }
+
+	@PrePersist
+	protected void onCreate() {
+		updatedTime = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updatedTime = new Date();
+	}
+
+	public int getKeywordFrequency() {
+		return keywordFrequency;
+	}
 
 	protected OptOutKeywordEntity() {
 	}
